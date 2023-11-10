@@ -27,3 +27,15 @@ res.send('NOT IMPLEMENTED: horse delete DELETE ' + req.params.id);
 exports.horse_update_put = function(req, res) {
 res.send('NOT IMPLEMENTED: horse update PUT' + req.params.id);
 };
+// VIEWS
+// Handle a show all view
+exports.horse_view_all_Page = async function(req, res) {
+    try{
+    thehorses = await horse.find();
+    res.render('horse', { title: 'horse Search Results', results: thehorses });
+    }
+    catch(err){
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+    }
+    };

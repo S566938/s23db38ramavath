@@ -80,6 +80,11 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(500));
+});
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
