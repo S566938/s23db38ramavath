@@ -11,10 +11,7 @@ exports.horse_list = async function(req, res) {
     }
     };
     
-// for a specific horse.
-exports.horse_detail = function(req, res) {
-res.send('NOT IMPLEMENTED: horse detail: ' + req.params.id);
-};
+
 // Handle horse create on POST.
 exports.horse_create_post = function(req, res) {
 res.send('NOT IMPLEMENTED: horse create POST');
@@ -59,3 +56,15 @@ exports.horse_create_post = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
     };
+// for a specific horse.
+exports.horse_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+    result = await horse.findById( req.params.id)
+    res.send(result)
+    } catch (error) {
+    res.status(500)
+    res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+    };
+    
