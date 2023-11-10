@@ -3,6 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
 require('dotenv').config();
 const connectionString =
 process.env.MONGO_CON
@@ -54,6 +55,8 @@ async function recreateDB(){
   if (reseed) {recreateDB();}
   
 
+var app = express();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -69,6 +72,7 @@ app.use('/users', usersRouter);
 app.use('/horse', horseRouter);
 app.use('/board', boardRouter);
 app.use('/choose', chooseRouter);
+
 app.use('/resource', resourceRouter);
 
 // catch 404 and forward to error handler
