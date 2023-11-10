@@ -39,3 +39,23 @@ exports.horse_view_all_Page = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
     };
+    // Handle horse create on POST.
+exports.horse_create_post = async function(req, res) {
+    console.log(req.body)
+    let document = new horse();
+    // We are looking for a body, since POST does not have query parameters.
+    // Even though bodies can be in many different formats, we will be picky
+    // and require that it be a json object
+    // {"horse_type":"goat", "cost":12, "size":"large"}
+    document.horse_color = req.body.horse_color;
+    document.horse_breed = req.body.horse_breed;
+    document.horse_price = req.body.horse_price;
+    try{
+    let result = await document.save();
+    res.send(result);
+    }
+    catch(err){
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+    }
+    };
