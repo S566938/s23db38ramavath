@@ -1,0 +1,28 @@
+extends layout
+block content
+ h1= title
+ form(id='horseForm', action="/resource/horse", method="POST")
+  div.form-group
+   label.horseAttr(for='horse_color') horse color
+   input#horse_color(type='text', name='horse_color')
+  div.form-group
+   label.horseAttr(for='horse_breed') horse breed
+   input#horse_breed(type='text', name='horse_breed')
+  div.form-group
+   label.horseAttr(for='horse_price') horse price
+   input#horse_price(type='number', name='horse_price')
+  input(type="submit")
+ script.
+  document.forms['horseForm'].addEventListener('submit', (event) => {
+    event.preventDefault();
+    fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) 
+    }).then((resp) => {
+        return resp.json();
+    }).then((body) => {
+        alert("Save succeded")
+    }).catch((error) => {
+        alert("Save failed " + error )
+    });
+   });

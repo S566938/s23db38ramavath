@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h1= title
+  if toShow == null
+    h2 No instance to toshow
+  else
+    - let horseid = toShow._id
+    - let horse_color = toShow.horse_color
+    - let horse_breed = toShow.horse_breed
+    - let horse_price = toShow.horse_price
+
+    div
+      div.row
+        div(class='horseAttr mr-3') horse ID is:
+        div #{horseid}
+
+      div.row
+        div(class='horseAttr mr-3') horse Name is:
+        div #{horse_color}
+
+      div.row
+        div(class='horseAttr mr-3') horse Color is:
+        div #{horse_breed}
+
+      div.row
+        div(class='horseAttr mr-3') horse Cost is:
+        div #{horse_price}
+
