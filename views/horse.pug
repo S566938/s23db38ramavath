@@ -1,25 +1,29 @@
 extends layout
- 
+
 block content
   h1= title
-  - let items = results
-  div(class="container-fluid")
-    div(class="row m-1")
-      each item in results
-        - let destination1 = `dispatch("/horse/update?id=${item._id}")`
-        - let destination2 = `dispatch("/horse/create")`
-        - let destination3 = `dispatch("/horse/detail?id=${item._id}")`
-        - let destination4 = `dispatch("/horse/delete?id=${item._id}")`
-        div(class="row-sm-2 m-1") 
-          | horse color: #{item.horse_color}, 
-          | horse breed: #{item.horse_breed}, 
-          | horse price: #{item.horse_price}
-          //- button.btn(class="btn-primary ml-1", onclick= destination2) Create 
-        button.btn(class="btn-primary ml-1", onclick= destination1) Update 
-          //- button.btn(class="btn-primary ml-1", onclick= destination3) Detail
-          //- button.btn(class="btn-primary ml-1", onclick= destination4) Delete
- 
+  //- - let items = ['horse_type','quantity','cost']
+  - let items = results;
+  - let o;
   script.
-    function dispatch(path) {
-      window.lohorseion.href = path;
+    function buy(x){
+      alert('purchased item ' + x)
+   } 
+  div(class='container-fluid')
+    button.btn(class="btn btn-success",href="/horse/Create") Create
+    div(class='row m-1')
+    div(class="row row-cols-1 row-cols-sm-4 g-6")
+      each item,index in items
+        - let destination = `dispatch(\"/horse/update?id=${item._id}\")`
+        - let details = `dispatch(\"/horse/detail?id=${item._id}\")` 
+        - let Delete = `dispatch(\"/horse/delete/?id=${item._id}\")`
+        div(class="horsed text-black mb-3" class='col' class='horsed' class='horsed-body' class='horsed-text' onclick='buy('+index+')') Item color is #{item.horse_color}(Item breed is #{item.horse_breed})price is #{item.horse_price} 
+          <br><br>
+          button.btn( class="btn-primary", onclick= destination) Update
+          button.btn(class="btn-success",onclick=details) Details
+          button.btn(class="btn btn-danger",onClick=Delete) Delete
+
+  script.
+    function dispatch(path){
+      window.location.href=path
     }

@@ -1,36 +1,57 @@
 extends layout
+
 block content
- h1= title
- - let horseid = toShow._id
- - let horse_color = toShow.horse_color
- - let horse_breed = toShow.horse_breed
- - let horse_price = toShow.horse_price
- div.row(class='mb-2')
- div.mr-1 ID is
- div #{horseid}
- - let actionid = "/resource/horse/" + horseid
- form(id='horseForm', action=actionid, method="PUT")
-  div.form-group
-   label.horseAttr(for='horse_color') horse color
-   input#horse_color(type='text', name='horse_color',value=horse_color)
-  div.form-group
-   label.horseAttr(for='horse_breed') horse breed
-   input#horse_breed(type='text', name='horse_breed',value=horse_breed)
-  div.form-group
-   label.horseAttr(for='horse_price') horse price
-   input#horse_price(type='number', name='horse_price',value=horse_price)
-  input(type="submit")
- script.
-  document.forms['horseForm'].addEventListener('submit', (event) => {
-    event.preventDefault();
-    fetch(event.target.action, {
+  h1= title
+
+  if(toShow == null)
+    h2 No instance to update
+  else
+    - let horseid = toShow._id
+    - let horse_color = toShow.horse_color
+    - let horse_breed = toShow.horse_breed
+    - let horse_price = toShow.horse_price
+    - let actionid = "/resource/horses/" + horseid
+    script let actionid = "#{actionid}"
+    div.row(class='mb-2')
+    div.mr-1 ID is 
+      span(style="color:red")  #{horseid}
+    form(id='horseForm', action= actionid, method="PUT")
+      div.form-group
+      div(class="row g-3 align-items-center")
+        div(class="col-1")
+          label.horseAttr(for='horse_color',class="col-form-label") horse Colour
+        div(class="col-auto")
+          input#horse_color(type='text', name='horse_color',class="form-control", value=horse_color)
+      div.form-group
+      div(class="row g-3 align-items-center")
+        div(class="col-1")
+          label.horseAttr(for='horse_breed',class="col-form-label") horse Breed 
+        div(class="col-auto")
+          input#horse_breed(type='text', name='horse_breed',class="form-control", value=horse_breed)
+      div.form-group
+      div(class="row g-3 align-items-center")
+        div(class="col-1")
+          label.horseAttr(for='horse_price',class="col-form-label") horse cost
+        div(class="col-auto")
+          input#horse_price(type='number', name='horse_price',class="form-control", value=horse_price)
+      input(class="btn btn-danger m-2" type="submit")
+        //- button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+      button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+    
+    script.
+      document.forms['horseForm'].addEventListener('submit', (event) => {
+       event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+       fetch(event.target.action, {
         method: 'PUT',
-        body: new URLSearchParams(new FormData(event.target)) 
-    }).then((resp) => {
-        return resp.json();
-    }).then((body) => {
-        alert("Save succeded")
-    }).catch((error) => {
-        alert("Save failed " + error )
-    });
-   });
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+        alert("Update succeded")
+        // TODO handle body
+        }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error )
+       });
+      });
